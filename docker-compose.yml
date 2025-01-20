@@ -1,0 +1,12 @@
+name: openai
+
+services:
+  api-homes-auth:
+    container_name: api-homes-auth
+    env_file:
+      - ./.env
+    build:
+      context: .
+    restart: always
+    ports:
+      - 3000:3000
