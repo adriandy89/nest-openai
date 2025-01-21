@@ -8,19 +8,20 @@ interface Options {
   prompt: string;
   originalImage?: string;
   maskImage?: string;
+  model: string;
 }
 
 export const imageGenerationUseCase = async (
   openai: OpenAI,
   options: Options,
 ) => {
-  const { prompt, originalImage, maskImage } = options;
+  const { prompt, model, originalImage, maskImage } = options;
 
   // Todo: verificar original image
   if (!originalImage || !maskImage) {
     const response = await openai.images.generate({
       prompt: prompt,
-      model: 'dall-e-3',
+      model, //: 'dall-e-3',
       n: 1,
       size: '1024x1024',
       quality: 'standard',

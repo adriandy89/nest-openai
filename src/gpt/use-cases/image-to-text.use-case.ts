@@ -5,6 +5,7 @@ import OpenAI from 'openai';
 interface Options {
   prompt?: string;
   imageFile: Express.Multer.File;
+  model: string;
 }
 
 const convertToBase64 = (file: Express.Multer.File) => {
@@ -14,10 +15,10 @@ const convertToBase64 = (file: Express.Multer.File) => {
 };
 
 export const imageToTextUseCase = async (openai: OpenAI, options: Options) => {
-  const { imageFile, prompt } = options;
+  const { imageFile, prompt, model } = options;
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-4-turbo', //'gpt-4-vision-preview',
+    model, //: 'gpt-4o-mini',
     max_tokens: 1000,
     messages: [
       {

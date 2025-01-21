@@ -2,14 +2,15 @@ import OpenAI from 'openai';
 
 interface Options {
   prompt: string;
+  model: string;
 }
 
 export const prosConsDicusserUseCase = async (
   openai: OpenAI,
-  { prompt }: Options,
+  { prompt, model }: Options,
 ) => {
   const response = await openai.chat.completions.create({
-    model: 'gpt-4',
+    model, //: 'gpt-4o-mini',
     messages: [
       {
         role: 'system',

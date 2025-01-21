@@ -2,13 +2,14 @@ import OpenAI from 'openai';
 
 interface Options {
   prompt: string;
+  model: string;
 }
 
 export const orthographyCheckUseCase = async (
   openai: OpenAI,
   options: Options,
 ) => {
-  const { prompt } = options;
+  const { prompt, model } = options;
 
   const completion = await openai.chat.completions.create({
     messages: [
@@ -29,9 +30,7 @@ export const orthographyCheckUseCase = async (
           userScore: number,
           errors: string[], // ['error -> solución']
           message: string, //  Usa emojis y texto para felicitar al usuario
-        }
-        
-        
+        }        
         `,
       },
       {
@@ -39,7 +38,7 @@ export const orthographyCheckUseCase = async (
         content: prompt,
       },
     ],
-    model: 'gpt-3.5-turbo-1106',
+    model, //: 'gpt-4o-mini',
     temperature: 0.3,
     max_tokens: 150,
     response_format: {

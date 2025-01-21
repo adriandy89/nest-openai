@@ -3,14 +3,15 @@ import OpenAI from 'openai';
 interface Options {
   prompt: string;
   lang: string;
+  model: string;
 }
 
 export const translateUseCase = async (
   openai: OpenAI,
-  { prompt, lang }: Options,
+  { prompt, lang, model }: Options,
 ) => {
   const response = await openai.chat.completions.create({
-    model: 'gpt-4',
+    model,
     messages: [
       {
         role: 'system',

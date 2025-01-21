@@ -5,13 +5,14 @@ import { downloadImageAsPng } from 'src/helpers';
 
 interface Options {
   baseImage: string;
+  model: string;
 }
 
 export const imageVariationUseCase = async (
   openai: OpenAI,
   options: Options,
 ) => {
-  const { baseImage } = options;
+  const { baseImage, model } = options;
 
   const pngImagePath = await downloadImageAsPng(baseImage, true);
 
@@ -23,7 +24,7 @@ export const imageVariationUseCase = async (
   //   response_format: 'url'
   // });
   const response = await openai.images.createVariation({
-    model: 'dall-e-2',
+    model, //: 'dall-e-3',
     image: fs.createReadStream(pngImagePath),
     n: 1,
     size: '1024x1024',

@@ -5,12 +5,13 @@ import OpenAI from 'openai';
 
 interface Options {
   prompt: string;
+  model: string;
   voice?: string;
 }
 
 export const textToAudioUseCase = async (
   openai: OpenAI,
-  { prompt, voice }: Options,
+  { prompt, model, voice }: Options,
 ) => {
   const voices = {
     nova: 'nova',
@@ -29,7 +30,7 @@ export const textToAudioUseCase = async (
   fs.mkdirSync(folderPath, { recursive: true });
 
   const mp3 = await openai.audio.speech.create({
-    model: 'tts-1',
+    model, //: 'tts-1',
     voice: selectedVoice,
     input: prompt,
     response_format: 'mp3',
