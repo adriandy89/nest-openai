@@ -16,6 +16,10 @@ async function bootstrap() {
   const port = configService.get('PORT') || 3019;
   const cors = configService.get('CORS') === 'true';
 
+  if (cors) {
+    app.enableCors();
+  }
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -23,19 +27,19 @@ async function bootstrap() {
     }),
   );
 
-  app.setGlobalPrefix('api/v1');
-  app.use(json({ limit: '5mb' }));
-  app.use(urlencoded({ extended: true, limit: '5mb' }));
+  app.setGlobalPrefix('api');
+  app.use(json({ limit: '9mb' }));
+  app.use(urlencoded({ extended: true, limit: '9mb' }));
 
   if (environment === 'develop') {
     const config = new DocumentBuilder()
       .setTitle('API')
-      .setDescription('Endpoints Home - API - Gateway')
-      .addBearerAuth()
+      .setDescription('Endpoints OpenAI - API')
+      // .addBearerAuth()
       .setVersion('1.0')
       .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/v1/docs', app, document, {
+    SwaggerModule.setup('api/docs', app, document, {
       swaggerOptions: {
         filter: true,
         persistAuthorization: true,
