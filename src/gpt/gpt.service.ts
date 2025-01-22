@@ -25,6 +25,7 @@ import {
   TextToAudioDto,
   TranslateDto,
 } from './dtos';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GptService {
@@ -35,10 +36,12 @@ export class GptService {
   // DALL_E_MODEL=dall-e-3
   // TTS_MODEL=tts-1
   // WHISPER_MODEL=whisper-1
-  private readonly gtpModel = process.env.GPT_MODEL;
-  private readonly dallEModel = process.env.DALL_E_MODEL;
-  private readonly ttsModel = process.env.TTS_MODEL;
-  private readonly whisperModel = process.env.WHISPER_MODEL;
+  gtpModel = this.configService.get<string>('GTP_MODEL'); // process.env.GPT_MODEL;
+  dallEModel = this.configService.get<string>('DALL_E_MODEL'); // process.env.DALL_E_MODEL;
+  ttsModel = this.configService.get<string>('TTS_MODEL'); // process.env.TTS_MODEL;
+  whisperModel = this.configService.get<string>('WHISPER_MODEL'); // process.env.WHISPER_MODEL;
+
+  constructor(private configService: ConfigService) {}
 
   // Solo va a llamar casos de uso
 
@@ -50,6 +53,8 @@ export class GptService {
   }
 
   async prosConsDicusser({ prompt }: ProsConsDiscusserDto) {
+    console.log(this.gtpModel);
+
     return await prosConsDicusserUseCase(this.openai, {
       prompt,
       model: this.gtpModel,
@@ -57,6 +62,8 @@ export class GptService {
   }
 
   async prosConsDicusserStream({ prompt }: ProsConsDiscusserDto) {
+    console.log(this.gtpModel);
+
     return await prosConsDicusserStreamUseCase(this.openai, {
       prompt,
       model: this.gtpModel,
@@ -103,6 +110,7 @@ export class GptService {
       audioFile,
       prompt,
       model: this.whisperModel,
+      language: 'es',
     });
   }
 

@@ -10,7 +10,10 @@ export const getMessageListUseCase = async (
 ) => {
   const { threadId } = options;
 
-  const messageList = await openai.beta.threads.messages.list(threadId);
+  const messageList = await openai.beta.threads.messages.list(threadId, {
+    limit: 1,
+    order: 'desc',
+  });
 
   console.log(messageList);
 

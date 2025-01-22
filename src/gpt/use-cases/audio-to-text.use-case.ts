@@ -6,10 +6,11 @@ interface Options {
   prompt?: string;
   audioFile: Express.Multer.File;
   model: string;
+  language: string;
 }
 
 export const audioToTextUseCase = async (openai: OpenAI, options: Options) => {
-  const { prompt, audioFile, model } = options;
+  const { prompt, audioFile, model, language } = options;
 
   console.log({ prompt });
 
@@ -17,7 +18,7 @@ export const audioToTextUseCase = async (openai: OpenAI, options: Options) => {
     model, //: 'whisper-1',
     file: fs.createReadStream(audioFile.path),
     prompt: prompt, // mismo idioma del audio
-    language: 'es',
+    language,
     // response_format: 'vtt', // 'srt',
     response_format: 'verbose_json',
   });

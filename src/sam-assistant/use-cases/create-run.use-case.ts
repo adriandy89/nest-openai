@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 interface Options {
   threadId: string;
-  assistantId?: string;
+  assistantId: string;
 }
 
 export const createRunUseCase = async (openai: OpenAI, options: Options) => {
