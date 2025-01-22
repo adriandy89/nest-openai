@@ -18,7 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { unlink } from 'fs/promises';
 
-@Controller('sam-assistant')
+@Controller('assistants')
 export class AssistantsController {
   constructor(private readonly assistantsService: AssistantsService) {}
 
