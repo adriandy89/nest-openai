@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { json, urlencoded } from 'express';
 import helmet from 'helmet';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,8 @@ async function bootstrap() {
   if (cors) {
     app.enableCors();
   }
+  app.use(bodyParser.json({ limit: '10mb' }));
+  app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -28,8 +31,6 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('api');
-  app.use(json({ limit: '9mb' }));
-  app.use(urlencoded({ extended: true, limit: '9mb' }));
 
   if (environment === 'develop') {
     const config = new DocumentBuilder()

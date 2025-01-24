@@ -135,7 +135,7 @@ export class GptService {
   async geneateImageVariation({ baseImage }: ImageVariationDto) {
     return imageVariationUseCase(this.openai, {
       baseImage,
-      model: this.dallEModel,
+      model: 'dall-e-2',
     });
   }
 
